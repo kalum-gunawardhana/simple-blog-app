@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { BlogHeader } from '@/app/components/blog/BlogHeader';
-import { SubscriptionPlans } from '@/app/components/subscription/SubscriptionPlans';
-import { CheckoutForm } from '@/app/components/subscription/CheckoutForm';
+import { BlogHeader } from '@/components/blog/BlogHeader';
+import { SubscriptionPlans } from '@/components/subscription/SubscriptionPlans';
+import { CheckoutForm } from '@/components/subscription/CheckoutForm';
 
 export default function SubscribePage() {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);

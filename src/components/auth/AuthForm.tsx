@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/app/providers/AuthProvider';
+import { useAuth } from '@/hooks/useAuth';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface AuthFormProps {
@@ -12,12 +12,12 @@ export function AuthForm({ isLogin }: AuthFormProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
-    const { signIn, signUp, loading } = useAuth();
+    const [loading, setLoading] = useState(false);
+    const { signIn, signUp } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
+        setLoading(true);
 
         try {
             if (isLogin) {
@@ -25,19 +25,15 @@ export function AuthForm({ isLogin }: AuthFormProps) {
             } else {
                 await signUp(email, password);
             }
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred');
+        } catch (error) {
+            console.error('Auth error:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-                <div className="bg-red-50 text-red-600 px-4 py-3 rounded-md text-sm">
-                    {error}
-                </div>
-            )}
-            
             <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
@@ -91,4 +87,4 @@ export function AuthForm({ isLogin }: AuthFormProps) {
             </button>
         </form>
     );
-} 
+}

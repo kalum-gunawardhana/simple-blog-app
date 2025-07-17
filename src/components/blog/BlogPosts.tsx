@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PostCard } from './PostCard';
+import { PostCard } from '@/app/components/blog/PostCard';
 import { useAuth } from '@/app/hooks/useAuth';
 
 export function BlogPosts() {
@@ -87,4 +87,4 @@ export function BlogPosts() {
             ))}
         </div>
     );
-} 
+}
