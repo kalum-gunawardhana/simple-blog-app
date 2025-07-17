@@ -6,34 +6,34 @@ A breakdown of key tasks, estimated times, and status for the 3-day blog project
 
 ## 🗓️ Day 1 – July 16
 
-| Task                                         | Estimated Time | Status     |
-|----------------------------------------------|----------------|------------|
-| Initialize Next.js project                   | 1 hr           | ✅ Done     |
-| Setup Supabase project & database            | 1.5 hrs        | ✅ Done     |
-| Implement Supabase Auth (login/signup)       | 2 hrs          | ✅ Done     |
-| Design and build basic UI layout             | 1 hr           | ✅ Done     |
-| Create `posts` table in Supabase             | 0.5 hr         | ✅ Done     |
+| Task                                         | Estimated Time | Status         |
+|----------------------------------------------|----------------|----------------|
+| Initialize Next.js project                   | 1 hr           | ✅ Done        |
+| Setup Supabase project & database            | 1.5 hrs        | ⬜ Not Started |
+| Implement Supabase Auth (login/signup)       | 2 hrs          | ⬜ Not Started |
+| Design and build basic UI layout             | 1 hr           | ⬜ Not Started |
+| Create `posts` table in Supabase             | 0.5 hr         | ⬜ Not Started |
 
 ---
 
 ## 🗓️ Day 2 – July 17
 
-| Task                                         | Estimated Time | Status     |
-|----------------------------------------------|----------------|------------|
-| Display public posts (list view)             | 1.5 hrs        | ✅ Done     |
-| Add post search/filter functionality         | 1 hr           | ✅ Done     |
-| Implement post creation UI & logic           | 2 hrs          | ✅ Done     |
-| Edit / delete post functions                 | 1.5 hrs        | ✅ Done     |
-| Post visibility toggle (public/premium)      | 1 hr           | ✅ Done     |
+| Task                                         | Estimated Time | Status         |
+|----------------------------------------------|----------------|----------------|
+| Display public posts (list view)             | 1.5 hrs        | ⬜ Not Started |
+| Add post search/filter functionality         | 1 hr           | ⬜ Not Started |
+| Implement post creation UI & logic           | 2 hrs          | ⬜ Not Started |
+| Edit / delete post functions                 | 1.5 hrs        | ⬜ Not Started |
+| Post visibility toggle (public/premium)      | 1 hr           | ⬜ Not Started |
 
 ---
 
 ## 🗓️ Day 3 – July 18
 
-| Task                                         | Estimated Time | Status     |
-|----------------------------------------------|----------------|------------|
-| Integrate Stripe subscription system         | 2 hrs          | ⏳ In Progress |
-| Protect premium content                      | 1.5 hrs        | ⏳ In Progress |
+| Task                                         | Estimated Time | Status         |
+|----------------------------------------------|----------------|----------------|
+| Integrate Stripe subscription system         | 2 hrs          | ⬜ Not Started |
+| Protect premium content                      | 1.5 hrs        | ⬜ Not Started |
 | Final testing and bug fixes                  | 1 hr           | ⬜ Not Started |
 | Deployment to Vercel                         | 0.5 hr         | ⬜ Not Started |
 
@@ -41,10 +41,10 @@ A breakdown of key tasks, estimated times, and status for the 3-day blog project
 
 ## ✅ Summary
 
-- **Total Tasks:** 15  
-- **Completed:** 10  
-- **In Progress:** 2  
-- **Not Started:** 2
+- **Total Tasks:**   
+- **Completed:**   
+- **In Progress:**  
+- **Not Started:**
 
 ---
 
