@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
-import { BlogHeader } from '@/app/components/blog/BlogHeader';
-import { BlogPosts } from '@/app/components/blog/BlogPosts';
-import { BlogSidebar } from '@/app/components/blog/BlogSidebar';
-import { SearchBar } from '@/app/components/blog/SearchBar';
+import { BlogHeader } from '@/components/blog/BlogHeader';
+import { BlogPosts } from '@/components/blog/BlogPosts';
+import { BlogSidebar } from '@/components/blog/BlogSidebar';
+import { SearchBar } from '@/components/blog/SearchBar';
 
 export default function Home() {
   return (
