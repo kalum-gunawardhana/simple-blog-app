@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { AuthForm } from '@/components/auth/AuthForm';
-import { BlogHeader } from '@/components/blog/BlogHeader';
+import { AuthForm } from '@/app/components/auth/AuthForm';
+import { BlogHeader } from '@/app/components/blog/BlogHeader';
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
