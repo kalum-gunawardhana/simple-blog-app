@@ -1,27 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { BlogHeader } from '@/app/components/blog/BlogHeader';
 import { DashboardSidebar } from '@/app/components/dashboard/DashboardSidebar';
-import { PostsManager } from '@/components/dashboard/PostsManager';
-import { PostEditor } from '@/components/dashboard/PostEditor';
-import { ProfileSettings } from '@/components/dashboard/ProfileSettings';
-import { useAuth } from '@/hooks/useAuth';
+import { PostsManager } from '@/app/components/dashboard/PostsManager';
+import { PostEditor } from '@/app/components/dashboard/PostEditor';
+import { ProfileSettings } from '@/app/components/dashboard/ProfileSettings';
+import { useAuth } from '@/app/providers/AuthProvider';
 
 export default function DashboardPage() {
     const [activeTab, setActiveTab] = useState('posts');
     const [editingPost, setEditingPost] = useState<any>(null);
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+    const router = useRouter();
 
-    if (!user) {
+    useEffect(() => {
+        if (!loading && !user) {
+            router.push('/auth');
+        }
+    }, [user, loading, router]);
+
+    if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-                    <p className="text-gray-600">Please sign in to access the dashboard.</p>
+                    <h2 className="text-xl font-semibold text-gray-900">Loading...</h2>
                 </div>
             </div>
         );
+    }
+
+    if (!user) {
+        return null; // Will redirect in useEffect
     }
 
     return (
