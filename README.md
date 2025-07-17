@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 Simple Blog Publication App
 
-## Getting Started
+A modern blog platform built using **Next.js**, **Supabase**, and **Stripe**, designed to demonstrate key web development concepts including authentication, database interaction, and monetized premium content.
 
-First, run the development server:
+Hosted on **Vercel** for seamless deployment.
+
+---
+
+## 🚀 Project Overview
+
+This application allows users to view public blog posts, create and manage their own content, and subscribe to unlock premium content. It's a lightweight publishing platform showcasing full-stack development with modern tools.
+
+---
+
+## ✨ Features
+
+### 🆓 Free Posts Section
+- View all public posts
+- Search posts by title/content
+- Clean and simple navigation
+
+### ✍️ Content Management (Authenticated Users)
+- Create and edit blog posts
+- Delete posts
+- Toggle between public and premium visibility
+
+### 💎 Premium Features
+- Stripe integration for paid subscriptions
+- Access to exclusive, premium content
+- Protected routes/pages for subscribers only
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Next.js](https://nextjs.org/)
+- **Backend/Auth/DB**: [Supabase](https://supabase.com/)
+- **Payments**: [Stripe](https://stripe.com/)
+- **Hosting**: [Vercel](https://vercel.com/)
+
+---
+
+## ⚙️ Setup Guide
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/your-username/simple-blog-app.git
+cd simple-blog-app
