@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowLeft, CreditCard, Shield } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, Shield } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface CheckoutFormProps {
     planId: string;
@@ -10,14 +12,9 @@ interface CheckoutFormProps {
 
 export function CheckoutForm({ planId, onBack }: CheckoutFormProps) {
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        email: '',
-        cardNumber: '',
-        expiry: '',
-        cvc: '',
-        name: '',
-        country: 'US'
-    });
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
+    const { user } = useAuth();
 
     const planDetails = {
         monthly: { name: 'Monthly', price: '$9.00', period: 'per month' },
@@ -26,18 +23,38 @@ export function CheckoutForm({ planId, onBack }: CheckoutFormProps) {
 
     const plan = planDetails[planId as keyof typeof planDetails];
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+    const handleCheckout = async () => {
+        try {
+            setLoading(true);
+            setError(null);
 
-        // Simulate payment processing
-        await new Promise(resolve => setTimeout(resolve, 2000));
+            if (!user) {
+                router.push('/auth');
+                return;
+            }
 
-        // This would normally integrate with Stripe
-        console.log('Processing payment for:', { planId, formData });
+            const response = await fetch('/api/stripe/create-subscription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ planId }),
+            });
 
-        setLoading(false);
-        alert('Payment successful! Welcome to BlogHub Premium!');
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to create checkout session');
+            }
+
+            // Redirect to Stripe Checkout
+            window.location.href = data.url;
+        } catch (err) {
+            console.error('Error creating checkout session:', err);
+            setError('Failed to start checkout process. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -54,93 +71,26 @@ export function CheckoutForm({ planId, onBack }: CheckoutFormProps) {
                 <div className="grid md:grid-cols-2 gap-8">
                     <div>
                         <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                            Payment Details
+                            Checkout
                         </h2>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email Address
-                                </label>
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="Enter your email"
-                                />
+                        {error && (
+                            <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6 text-red-800">
+                                {error}
                             </div>
+                        )}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Card Number
-                                </label>
-                                <div className="relative">
-                                    <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                                    <input
-                                        type="text"
-                                        value={formData.cardNumber}
-                                        onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
-                                        required
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="1234 5678 9012 3456"
-                                    />
-                                </div>
-                            </div>
+                        <button
+                            onClick={handleCheckout}
+                            disabled={loading}
+                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                        >
+                            {loading ? 'Processing...' : `Subscribe for ${plan.price}`}
+                        </button>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Expiry Date
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={formData.expiry}
-                                        onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
-                                        required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="MM/YY"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        CVC
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={formData.cvc}
-                                        onChange={(e) => setFormData({ ...formData, cvc: e.target.value })}
-                                        required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="123"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Cardholder Name
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    required
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="John Doe"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-                            >
-                                {loading ? 'Processing...' : `Subscribe for ${plan.price}`}
-                            </button>
-                        </form>
+                        <div className="mt-4 text-sm text-gray-500">
+                            By clicking subscribe, you will be redirected to Stripe to complete your purchase securely.
+                        </div>
                     </div>
 
                     <div>
@@ -175,10 +125,10 @@ export function CheckoutForm({ planId, onBack }: CheckoutFormProps) {
                             <span>Secured by Stripe. Cancel anytime.</span>
                         </div>
 
-                        <div className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500">
                             By subscribing, you agree to our Terms of Service and Privacy Policy.
                             You can cancel your subscription at any time.
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
